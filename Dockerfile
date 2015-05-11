@@ -1,7 +1,15 @@
 # start with a base image
 FROM ubuntu:14.04
 
+#OPENCV
+#Needed to grab some lib
+
+#RUN echo "91.189.88.46    archive.ubuntu.com\n91.189.88.46    security.ubuntu.com" >> /etc/hosts
+#RUN sh /etc/init.d/networking restart
+RUN echo 'deb http://archive.ubuntu.com/ubuntu precise multiverse' >> /etc/apt/sources.list
+
 # install dependencies
+#OCR
 RUN apt-get update
 RUN apt-get install -y autoconf automake libtool
 RUN apt-get install -y libpng12-dev
@@ -22,6 +30,32 @@ RUN apt-get install -y imagemagick
 RUN apt-get install -y wget
 RUN apt-get install -y python python-pip
 
+#OPENCV
+RUN apt-get install -y libopencv-dev build-essential checkinstall cmake pkg-config yasm libtiff4-dev libjpeg-dev libjasper-dev libavcodec-dev libavformat-dev libswscale-dev libdc1394-22-dev libxine-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev libv4l-dev python-dev python-numpy libtbb-dev libqt4-dev libgtk2.0-dev libfaac-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev libvorbis-dev libxvidcore-dev x264 v4l-utils ffmpeg
+
+
+WORKDIR /tmp
+RUN wget https://github.com/Itseez/opencv/archive/2.4.8.zip
+RUN unzip 2.4.8.zip
+
+WORKDIR /tmp/opencv-2.4.8
+RUN mkdir /tmp/opencv-2.4.8/build
+
+WORKDIR /tmp/opencv-2.4.8/build
+
+RUN cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local -D WITH_TBB=ON -D BUILD_NEW_PYTHON_SUPPORT=ON -D WITH_V4L=ON -D INSTALL_C_EXAMPLES=ON -D INSTALL_PYTHON_EXAMPLES=ON -D BUILD_EXAMPLES=ON -D WITH_QT=ON -D WITH_OPENGL=ON ..
+RUN make -j2
+RUN make install
+RUN echo "/usr/local/lib" > /etc/ld.so.conf.d/opencv.conf
+RUN ldconfig
+
+WORKDIR /
+RUN rm -rf /tmp/*
+#OPENCV END
+
+
+#LEPTONICA
+# Current version is at 1.72
 # build leptonica
 RUN wget http://www.leptonica.org/source/leptonica-1.70.tar.gz
 RUN tar -zxvf leptonica-1.70.tar.gz
