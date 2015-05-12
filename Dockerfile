@@ -15,53 +15,12 @@ RUN apt-get install -y python2.7-dev \
     python-dev \
     build-essential
 
-RUN apt-get install -y python \
-    python-pip \
-    libatlas-base-dev \
-    pkg-config \
-    libfreetype6-dev \
-    libpng12-dev \
-    libjpeg62-dev \
-    libatlas-base-dev \
-    gfortran \
-    python-scipy \
-    python-matplotlib
-
-#PIP requirements
-ADD requirements.txt /
-RUN pip install -r requirements.txt
-
 RUN apt-get update
 RUN apt-get install -y python-software-properties
 RUN apt-get install -y software-properties-common
 
 RUN add-apt-repository ppa:kirillshkrogalev/ffmpeg-next
 RUN apt-get update
-
-
-#OCR
-RUN apt-get install -y autoconf automake libtool \
-    libpng12-dev \
-    libjpeg62-dev \
-    g++ \
-    libtiff4-dev \
-    libopencv-dev \
-    libtesseract-dev \
-    git \
-    cmake \
-    build-essential \
-    libleptonica-dev \
-    liblog4cplus-dev \
-    libcurl3-dev \
-    python2.7-dev \
-    tk8.5 tcl8.5 tk8.5-dev tcl8.5-dev
-
-RUN apt-get build-dep -y python-imaging --fix-missing
-
-RUN apt-get install -y imagemagick \
-    wget
-
-
 
 #LIBCCV
 RUN apt-get update && apt-get install -y git \
@@ -137,14 +96,45 @@ WORKDIR /
 RUN rm -rf /tmp/*
 #OPENCV END
 
-
-
-
-
-
 #OCR PLACEHOLDER
+#OCR
+RUN apt-get install -y autoconf automake libtool \
+    libpng12-dev \
+    libjpeg62-dev \
+    g++ \
+    libtiff4-dev \
+    libopencv-dev \
+    libtesseract-dev \
+    git \
+    cmake \
+    build-essential \
+    libleptonica-dev \
+    liblog4cplus-dev \
+    libcurl3-dev \
+    python2.7-dev \
+    tk8.5 tcl8.5 tk8.5-dev tcl8.5-dev
+
+RUN apt-get build-dep -y python-imaging --fix-missing
+
+RUN apt-get install -y imagemagick \
+    wget
 
 
+RUN apt-get install -y python \
+    python-pip \
+    libatlas-base-dev \
+    pkg-config \
+    libfreetype6-dev \
+    libpng12-dev \
+    libjpeg62-dev \
+    libatlas-base-dev \
+    gfortran \
+    python-scipy \
+    python-matplotlib
+
+#PIP requirements
+ADD requirements.txt /
+RUN pip install -r requirements.txt
 
 
 #LEPTONICA
