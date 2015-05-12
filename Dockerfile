@@ -7,10 +7,19 @@ FROM ubuntu:14.04
 #RUN echo "91.189.88.46    archive.ubuntu.com\n91.189.88.46    security.ubuntu.com" >> /etc/hosts
 #RUN sh /etc/init.d/networking restart
 RUN echo 'deb http://archive.ubuntu.com/ubuntu precise multiverse' >> /etc/apt/sources.list
+RUN cat /etc/apt/sources.list
 
 # install dependencies
 #OCR
 RUN apt-get update
+RUN apt-get install -y python-software-properties
+RUN apt-get install -y software-properties-common
+
+RUN add-apt-repository ppa:kirillshkrogalev/ffmpeg-next
+RUN apt-get update
+RUN apt-get install -y ffmpeg
+
+
 RUN apt-get install -y autoconf automake libtool
 RUN apt-get install -y libpng12-dev
 RUN apt-get install -y libjpeg62-dev
