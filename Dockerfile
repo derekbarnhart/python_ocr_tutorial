@@ -42,7 +42,7 @@ RUN apt-get install -y python python-pip
 #OPENCV
 RUN apt-get install -y libopencv-dev build-essential checkinstall cmake pkg-config yasm libtiff4-dev libjpeg-dev libjasper-dev libavcodec-dev libavformat-dev libswscale-dev libdc1394-22-dev libxine-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev libv4l-dev python-dev python-numpy libtbb-dev libqt4-dev libgtk2.0-dev libfaac-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev libvorbis-dev libxvidcore-dev x264 v4l-utils ffmpeg
 
-RUN apt-get unzip
+RUN apt-get install -y unzip
 WORKDIR /tmp
 RUN wget https://github.com/Itseez/opencv/archive/2.4.8.zip
 RUN unzip 2.4.8.zip
