@@ -12,6 +12,7 @@ RUN echo 'deb http://archive.ubuntu.com/ubuntu precise multiverse' >> /etc/apt/s
 
 RUN apt-get update
 
+RUN apt-get install -y python2.7-dev python-dev
 RUN apt-get install -y python python-pip
 ADD requirements.txt /
 RUN pip install -r requirements.txt
@@ -24,10 +25,6 @@ RUN apt-get install -y software-properties-common
 RUN add-apt-repository ppa:kirillshkrogalev/ffmpeg-next
 RUN apt-get update
 
-RUN apt-get install -y python2.7-dev python-dev
-RUN apt-get install -y python python-pip
-ADD requirements.txt /
-RUN pip install -r requirements.txt
 
 #OCR
 RUN apt-get install -y autoconf automake libtool
