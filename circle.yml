@@ -7,8 +7,11 @@ machine:
 
 dependencies:
   override:
-    - docker build .
+    - docker build -t derekbarnhart/compVision .
 
-test:
-  override:
-    - bin/build-and-test-app.sh
+deployment:
+  hub:
+    branch: master
+    commands:
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker push derekbarnhart/compVision
