@@ -1,50 +1,12 @@
 # start with a base image
 FROM ubuntu:14.04
 
-#OPENCV
-#Needed to grab some lib
-
-#RUN echo "91.189.88.46    archive.ubuntu.com\n91.189.88.46    security.ubuntu.com" >> /etc/hosts
-#RUN sh /etc/init.d/networking restart
 RUN echo 'deb http://archive.ubuntu.com/ubuntu precise multiverse' >> /etc/apt/sources.list
 
-# install dependencies
-
-RUN apt-get update
-RUN apt-get install -y python2.7-dev \
-    python-dev \
-    build-essential
-
-RUN apt-get update
-RUN apt-get install -y python-software-properties
-RUN apt-get install -y software-properties-common
-
-RUN add-apt-repository ppa:kirillshkrogalev/ffmpeg-next
-RUN apt-get update
-
-#LIBCCV
-RUN apt-get update && apt-get install -y git \
-    gcc \
-    libpng-dev \
-    libjpeg-dev \
-    libfftw3-dev \
-    make \
-    libavcodec-dev \
-    libavformat-dev \
-    libswscale-dev \
-    libdispatch-dev \
-    libev-dev \
-    libatlas-base-dev \
-    libblas-dev \
-    libgsl0-dev wget
-
-RUN git clone https://github.com/liuliu/ccv.git
-COPY make_ccv.sh /
-RUN /make_ccv.sh
-#LIBCCV END
 
 #OPENCV
-RUN apt-get install -y libopencv-dev \
+RUN apt-get install -y \
+    libopencv-dev \
     build-essential \
     checkinstall \
     cmake \
@@ -96,7 +58,22 @@ WORKDIR /
 RUN rm -rf /tmp/*
 #OPENCV END
 
-#OCR PLACEHOLDER
+# install dependencies
+RUN apt-get update
+RUN apt-get install -y \
+    python2.7-dev \
+    python-dev \
+    build-essential
+
+RUN apt-get update
+RUN apt-get install -y \
+    python-software-properties \
+    software-properties-common
+
+RUN add-apt-repository ppa:kirillshkrogalev/ffmpeg-next
+RUN apt-get update
+
+
 #OCR
 RUN apt-get install -y autoconf automake libtool \
     libpng12-dev \
@@ -136,8 +113,6 @@ RUN apt-get install -y python \
 ADD requirements.txt /
 RUN pip install -r requirements.txt
 
-
-#LEPTONICA
 # Current version is at 1.72
 # build leptonica
 RUN wget http://www.leptonica.org/source/leptonica-1.70.tar.gz
@@ -150,8 +125,6 @@ RUN make install
 RUN ldconfig
 WORKDIR /
 RUN ls
-
-
 
 # build tesseract
 RUN wget https://tesseract-ocr.googlecode.com/files/tesseract-ocr-3.02.02.tar.gz
@@ -168,6 +141,34 @@ RUN cd ..
 RUN wget https://tesseract-ocr.googlecode.com/files/tesseract-ocr-3.02.eng.tar.gz
 RUN tar -xf tesseract-ocr-3.02.eng.tar.gz
 RUN sudo cp -r tesseract-ocr/tessdata /usr/local/share/
+#OCR END
+
+
+#LIBCCV
+RUN apt-get update && apt-get install -y \
+    git \
+    gcc \
+    libpng-dev \
+    libjpeg-dev \
+    libfftw3-dev \
+    make \
+    libavcodec-dev \
+    libavformat-dev \
+    libswscale-dev \
+    libdispatch-dev \
+    libev-dev \
+    libatlas-base-dev \
+    libblas-dev \
+    libgsl0-dev \
+    wget
+
+RUN git clone https://github.com/liuliu/ccv.git
+COPY make_ccv.sh /
+RUN /make_ccv.sh
+#LIBCCV END
+
+
+
 
 # update working directories
 ADD ./flask_server /flask_server
