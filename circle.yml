@@ -1,0 +1,14 @@
+general:
+  build_dir: .
+
+machine:
+  services:
+      - docker
+
+dependencies:
+  override:
+    - docker build .
+
+test:
+  override:
+    - bin/build-and-test-app.sh
