@@ -12,8 +12,8 @@ RUN echo 'deb http://archive.ubuntu.com/ubuntu precise multiverse' >> /etc/apt/s
 
 RUN apt-get update
 
-RUN apt-get install -y python2.7-dev python-dev
-RUN apt-get install -y python python-pip
+RUN apt-get install -y python2.7-dev python-dev build-essential
+RUN apt-get install -y python python-pip libatlas-base-dev
 ADD requirements.txt /
 RUN pip install -r requirements.txt
 
