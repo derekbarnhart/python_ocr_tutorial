@@ -11,8 +11,10 @@ RUN echo 'deb http://archive.ubuntu.com/ubuntu precise multiverse' >> /etc/apt/s
 # install dependencies
 
 RUN apt-get update
+RUN apt-get install -y python2.7-dev \
+    python-dev \
+    build-essential
 
-RUN apt-get install -y python2.7-dev python-dev build-essential
 RUN apt-get install -y python \
     python-pip \
     libatlas-base-dev \
@@ -20,12 +22,14 @@ RUN apt-get install -y python \
     libfreetype6-dev \
     libpng12-dev \
     libjpeg62-dev \
+    libatlas-base-dev \
+    gfortran \
     python-scipy \
     python-matplotlib
 
+#PIP requirements
 ADD requirements.txt /
 RUN pip install -r requirements.txt
-
 
 RUN apt-get update
 RUN apt-get install -y python-software-properties
@@ -36,39 +40,82 @@ RUN apt-get update
 
 
 #OCR
-RUN apt-get install -y autoconf automake libtool
-RUN apt-get install -y libpng12-dev
-RUN apt-get install -y libjpeg62-dev
-RUN apt-get install -y g++
-RUN apt-get install -y libtiff4-dev
-RUN apt-get install -y libopencv-dev libtesseract-dev
-RUN apt-get install -y git
-RUN apt-get install -y cmake
-RUN apt-get install -y build-essential
-RUN apt-get install -y libleptonica-dev
-RUN apt-get install -y liblog4cplus-dev
-RUN apt-get install -y libcurl3-dev
-RUN apt-get install -y python2.7-dev
-RUN apt-get install -y tk8.5 tcl8.5 tk8.5-dev tcl8.5-dev
+RUN apt-get install -y autoconf automake libtool \
+    libpng12-dev \
+    libjpeg62-dev \
+    g++ \
+    libtiff4-dev \
+    libopencv-dev \
+    libtesseract-dev \
+    git \
+    cmake \
+    build-essential \
+    libleptonica-dev \
+    liblog4cplus-dev \
+    libcurl3-dev \
+    python2.7-dev \
+    tk8.5 tcl8.5 tk8.5-dev tcl8.5-dev
+
 RUN apt-get build-dep -y python-imaging --fix-missing
-RUN apt-get install -y imagemagick
-RUN apt-get install -y wget
-RUN apt-get install -y python python-pip
 
-
-
+RUN apt-get install -y imagemagick \
+    wget
 
 
 
 #LIBCCV
-RUN apt-get update && apt-get install -y git gcc libpng-dev libjpeg-dev libfftw3-dev make libavcodec-dev libavformat-dev libswscale-dev libdispatch-dev libev-dev libatlas-base-dev libblas-dev libgsl0-dev wget
+RUN apt-get update && apt-get install -y git \
+    gcc \
+    libpng-dev \
+    libjpeg-dev \
+    libfftw3-dev \
+    make \
+    libavcodec-dev \
+    libavformat-dev \
+    libswscale-dev \
+    libdispatch-dev \
+    libev-dev \
+    libatlas-base-dev \
+    libblas-dev \
+    libgsl0-dev wget
+
 RUN git clone https://github.com/liuliu/ccv.git
 COPY make_ccv.sh /
 RUN /make_ccv.sh
 #LIBCCV END
 
 #OPENCV
-RUN apt-get install -y libopencv-dev build-essential checkinstall cmake pkg-config yasm libtiff4-dev libjpeg-dev libjasper-dev libavcodec-dev libavformat-dev libswscale-dev libdc1394-22-dev libxine-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev libv4l-dev python-dev python-numpy libtbb-dev libqt4-dev libgtk2.0-dev libfaac-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev libvorbis-dev libxvidcore-dev x264 v4l-utils ffmpeg
+RUN apt-get install -y libopencv-dev \
+    build-essential \
+    checkinstall \
+    cmake \
+    pkg-config \
+    yasm \
+    libtiff4-dev \
+    libjpeg-dev \
+    libjasper-dev \
+    libavcodec-dev \
+    libavformat-dev \
+    libswscale-dev \
+    libdc1394-22-dev \
+    libxine-dev \
+    libgstreamer0.10-dev \
+    libgstreamer-plugins-base0.10-dev \
+    libv4l-dev python-dev \
+    python-numpy \
+    libtbb-dev \
+    libqt4-dev \
+    libgtk2.0-dev \
+    libfaac-dev \
+    libmp3lame-dev \
+    libopencore-amrnb-dev \
+    libopencore-amrwb-dev \
+    libtheora-dev \
+    libvorbis-dev \
+    libxvidcore-dev \
+    x264 \
+    v4l-utils \
+    ffmpeg
 
 RUN apt-get install -y unzip wget
 WORKDIR /tmp
