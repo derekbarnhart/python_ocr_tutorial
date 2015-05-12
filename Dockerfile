@@ -21,7 +21,7 @@ RUN apt-get update
 #LIBCCV
 RUN apt-get update && apt-get install -y git gcc libpng-dev libjpeg-dev libfftw3-dev make libavcodec-dev libavformat-dev libswscale-dev libdispatch-dev libev-dev libatlas-base-dev libblas-dev libgsl0-dev wget
 RUN git clone https://github.com/liuliu/ccv.git
-COPY libccv/make_ccv.sh /
+COPY make_ccv.sh /
 RUN /make_ccv.sh
 #LIBCCV END
 
