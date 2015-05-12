@@ -30,6 +30,16 @@ RUN apt-get install -y imagemagick
 RUN apt-get install -y wget
 RUN apt-get install -y python python-pip
 
+
+#MISSING FFMPEG
+sudo add-apt-repository ppa:jon-severinsson/ffmpeg
+sudo apt-get update
+sudo apt-get install ffmpeg
+sudo apt-get install frei0r-plugins
+#END
+
+
+
 #OPENCV
 RUN apt-get install -y libopencv-dev build-essential checkinstall cmake pkg-config yasm libtiff4-dev libjpeg-dev libjasper-dev libavcodec-dev libavformat-dev libswscale-dev libdc1394-22-dev libxine-dev libgstreamer0.10-dev libgstreamer-plugins-base0.10-dev libv4l-dev python-dev python-numpy libtbb-dev libqt4-dev libgtk2.0-dev libfaac-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev libvorbis-dev libxvidcore-dev x264 v4l-utils ffmpeg
 
@@ -52,6 +62,13 @@ RUN ldconfig
 WORKDIR /
 RUN rm -rf /tmp/*
 #OPENCV END
+
+#LIBCCV
+RUN apt-get update && apt-get install -y git gcc libpng-dev libjpeg-dev libfftw3-dev make libavcodec-dev libavformat-dev libswscale-dev libdispatch-dev libev-dev libatlas-base-dev libblas-dev libgsl0-dev wget
+RUN git clone https://github.com/liuliu/ccv.git
+COPY make_ccv.sh /
+RUN /make_ccv.sh
+#LIBCCV END
 
 
 #LEPTONICA
