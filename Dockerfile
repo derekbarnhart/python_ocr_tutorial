@@ -20,7 +20,7 @@ RUN apt-get install -y python \
     libfreetype6-dev \
     libpng12-dev \
     libjpeg62-dev \
-    python-scypi \
+    python-scipy \
     python-matplotlib
 
 ADD requirements.txt /
