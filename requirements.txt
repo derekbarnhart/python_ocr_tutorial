@@ -20,7 +20,6 @@ pytesseract==0.1.5
 requests==2.5.1
 wsgiref==0.1.2
 
-pillow==2.7.0
 numpy==1.9.1
 matplotlib==1.4.3
 scipy==0.15.1
