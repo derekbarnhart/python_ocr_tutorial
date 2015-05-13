@@ -2,7 +2,11 @@
 FROM rtux/ubuntu-opencv
 RUN apt-get update
 
+
 RUN apt-get install -y
+    autoconf \
+    automake \
+    libtool \
     python \
     python-pip \
     libatlas-base-dev \
@@ -10,10 +14,12 @@ RUN apt-get install -y
     libfreetype6-dev \
     libpng12-dev \
     libjpeg62-dev \
+    python2.7-dev \
     libatlas-base-dev \
     gfortran \
     python-scipy \
     python-matplotlib \
+    libopencv-dev \
     wget
 
 #PIP requirements
