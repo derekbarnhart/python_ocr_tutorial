@@ -12,8 +12,6 @@ RUN apt-get install -y \
     libatlas-base-dev \
     pkg-config \
     libfreetype6-dev \
-    libpng12-dev \
-    libjpeg62-dev \
     python2.7-dev \
     libatlas-base-dev \
     gfortran \
