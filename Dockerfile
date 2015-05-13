@@ -2,7 +2,20 @@
 FROM ubuntu:14.04
 
 RUN echo 'deb http://archive.ubuntu.com/ubuntu precise multiverse' >> /etc/apt/sources.list
+RUN apt-get update
+RUN apt-get update
+RUN apt-get install -y \
+    python2.7-dev \
+    python-dev \
+    build-essential
 
+RUN apt-get update
+RUN apt-get install -y \
+    python-software-properties \
+    software-properties-common
+
+RUN add-apt-repository ppa:kirillshkrogalev/ffmpeg-next
+RUN apt-get update
 
 #OPENCV
 RUN apt-get install -y \
@@ -59,23 +72,14 @@ RUN rm -rf /tmp/*
 #OPENCV END
 
 # install dependencies
-RUN apt-get update
-RUN apt-get install -y \
-    python2.7-dev \
-    python-dev \
-    build-essential
 
-RUN apt-get update
-RUN apt-get install -y \
-    python-software-properties \
-    software-properties-common
-
-RUN add-apt-repository ppa:kirillshkrogalev/ffmpeg-next
-RUN apt-get update
 
 
 #OCR
-RUN apt-get install -y autoconf automake libtool \
+RUN apt-get install -y \
+    autoconf \
+    automake \
+    libtool \
     libpng12-dev \
     libjpeg62-dev \
     g++ \
