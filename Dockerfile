@@ -3,7 +3,7 @@ FROM rtux/ubuntu-opencv
 RUN apt-get update
 
 
-RUN apt-get install -y
+RUN apt-get install -y \
     autoconf \
     automake \
     libtool \
